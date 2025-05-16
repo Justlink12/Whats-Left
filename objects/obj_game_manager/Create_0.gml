@@ -1,0 +1,150 @@
+/// @description Insert description here
+// You can write your code in this editor
+move_spd = 0.5
+game_clock = 0
+cur_cyc = 0
+fade = false
+prior_cyc = 0
+fade_rate = 0.001
+weather = [obj_background_day,obj_night]
+depth = -500
+text_x = 0
+text_y = 0
+limbs = 0
+split_quote = ""
+quote_track = 0
+quote_build = ""
+quote_wait = 0
+quote_x = 20
+quote_y = 256
+audio_play_sound(snd_backgroundMusic,1,true,0.5)
+seconds = 0
+sec_str = ""
+minutes = 0
+min_str = ""
+hours = 1
+days = 0
+play_audio = true
+
+game_over = false
+game_type = 4
+
+dust[0] = "Dust fills every crevice, every breath heavier. The air itself seems set against survival"
+dust[1] = "The dust becomes everything-air, sky, even thought. Each breath feels like breathing sand"
+dust[2] = "Grit fills the visor, and every step feels like it might be the last"
+dust[3] = "The air clogs with dust, dense enough to feel as if you're drowning above ground"
+dust[4] = "Sand scrapes the lungs; every breath tastes of earth and exhaustion"
+dust[5] = "The storm feels alive, choking the air, turning each step into a battle"
+dust[6] = "Moving forward means battling the very air. Stopping means being buried alive"
+dust[7] = "The world outside fades, replaced by the relentless hiss and grind of dust"
+dust[8] = "Particles coat every inch, turning movement into a drain on what's left"
+dust[9] = "Vision blurs; the body aches. The storm consumes all"
+dust[10] = "One step through the dust, and it feels like ten more of your strength"
+
+flare[0] = "The sky blazes, and each step feels like moving through molten air"
+flare[1] = "Heat bears down, filling the suit with a searing pressure"
+flare[2] = "The flare blazes above, a relentless wave, each second heavier than the last"
+flare[3] = "The sun feels closer, a punishing force pressing down"
+flare[4] = "You're cooking alive in this suit. The world itself seems against you"
+flare[5] = "Every step feels like a drain, as if the sun pulls life from within"
+flare[6] = "The light burns too bright, it's no longer a guide but a challenge"
+flare[7] = "Beneath this light, everything is a burden"
+flare[8] = "The suit strains to protect, but even it buckles under the heat"
+flare[9] = "With each step, your strength is sapped by this solar wrath"
+flare[10] = "The world turns blinding, every shadow erased by scorching light"
+
+electromagnetic[0] = "A burst of static pierces the air, severing connection. You're alone, more than ever"
+electromagnetic[1] = "Interference crackles, leaving only fragmented words and broken sounds"
+electromagnetic[2] = "Signals falter, reminding you how fragile this line to survival really is"
+electromagnetic[3] = "The silence after the interference feels even louder-isolated, abandoned"
+electromagnetic[4] = "Garbled AI sounds leave you with half-words, half-hope"
+electromagnetic[5] = "Static surrounds, as if every signal wants to fade to nothing"
+electromagnetic[6] = "It's just noise now-no reassurance, no support, just fragmented pieces"
+electromagnetic[7] = "The interference scrambles everything; even the planet itself seems hostile"
+electromagnetic[8] = "The suit fails; the static remains. You're left guessing every step"
+electromagnetic[9] = "No voice guides you now; it's just the faint whine of disconnected signals"
+electromagnetic[10] = "The interference crackles, then cuts off-now it's just you, and the silence"
+
+stars[0] = "The night settles softly, offering a calm that feels almost foreign"
+stars[1] = "The stars are endless, a quiet reminder of beauty amidst desolation"
+stars[2] = "Under the stars, each step carries less weight, as if even the planet holds its breath"
+stars[3] = "The sky unfolds, a vast and quiet promise of something more"
+stars[4] = "Starlight stretches above, each step a gentle echo in the stillness"
+stars[5] = "The stars grant a moment's rest-a rare gift"
+stars[6] = "In the star-filled sky, the quiet feels like a reminder of things left behind"
+stars[7] = "The universe watches, its vastness giving a strange comfort"
+stars[8] = "Under these stars, for once, survival doesn't feel quite so lonely"
+stars[9] = "Each step is lighter, the stars a witness to every choice"
+stars[10] = "The quiet sky offers calm, a reminder of life beyond survival"
+
+moon[0] = "Under moonlight, the shadows fade, and the world feels open"
+moon[1] = "The moonlight guides, casting silver on every step"
+moon[2] = "The path feels clearer under the moon's steady glow"
+moon[3] = "A faint light fills the landscape, turning it almost peaceful"
+moon[4] = "The moon shines, and suddenly, each step feels less lonely"
+moon[5] = "The silver light guides, a gentle push forward"
+moon[6] = "Moonlight turns the world into shades of quiet silver"
+moon[7] = "Under the moon, every step becomes a little easier"
+moon[8] = "The moon watches over, softening the harshness"
+moon[9] = "The landscape glows, an invitation to move forward"
+moon[10] = "The moon lights the way, offering a rare sense of ease"
+
+meteor[0] = "Streaks of light fill the sky, a rare beauty in a barren world"
+meteor[1] = "Each meteor a fleeting light, like a promise to hold onto"
+meteor[2] = "The meteors fall, as if the universe itself is offering hope"
+meteor[3] = "Lights dance across the sky, a reminder of life beyond this struggle"
+meteor[4] = "Under the meteors, survival feels less bleak, almost hopeful"
+meteor[5] = "The night sparkles with each streak, lighting the darkness with grace"
+meteor[6] = "Meteors rain down, painting the sky with rare beauty"
+meteor[7] = "Each falling star brings a moment of wonder to the night"
+meteor[8] = "The meteors guide the way, as if showing a path beyond survival"
+meteor[9] = "Under this light, survival feels meaningful, a shared journey with the stars"
+meteor[10] = "Each meteor is a reminder that beauty still exists, even here"
+
+rain[0] = "Splish splash, the nitrogen rain falls cooly"
+rain[1] = "The pitter patter reminds you of home, of safety"
+rain[2] = "The rain cools you, freeing you from the inescapable suit momentarily"
+rain[3] = "The red hue colors the droplets, looking the same as the blood in you"
+rain[4] = "The ground becomes softer, and simpler to walk in"
+rain[5] = "Even in such a horrid place, even beauty can fall from the sky"
+rain[6] = "The clouds hide you from the intensity of this all"
+rain[7] = "When the clouds part, and the light strikes you, you feel some ease."
+rain[8] = "As you had, the rain falls and meets it's end on the red sands"
+rain[9] = "They loved the rain. The sounds, the comfort, the simple life"
+rain[10] = "The nitrogen rain cannot nourish you. But, it's existence revitalizes you"
+
+volcano[0] = "The air turns to ash, thick and choking, every breath a struggle for survival";
+volcano[1] = "The sky blackens, and the world disappears into a storm of smoke and fire";
+volcano[2] = "Each step feels like trudging through quicksand, the ash pulling you back";
+volcano[3] = "Breathing becomes a chore, the suit whirring as it fights to keep the poison at bay";
+volcano[4] = "The heat from the eruption radiates through the ground, a reminder of what waits below";
+volcano[5] = "Smoke blots out the sun, leaving only the glow of fire to guide your way";
+volcano[6] = "Every breath tastes of sulfur, thick and acidic, clawing at your throat";
+volcano[7] = "The ground shakes as the volcano roars, spewing its fury into the skies";
+volcano[8] = "Visibility fades into a cloud of black, your senses dulled by the oppressive heat and ash";
+volcano[9] = "The suit fights to keep you breathing, its fans whirring in desperation";
+volcano[10] = "The eruption's roar drowns out all thought, a constant reminder of the danger around you";
+
+earthquake[0] = "The ground trembles with a ferocity that turns the act of standing into a triumph";
+earthquake[1] = "Every crack beneath your feet threatens to split wider, to swallow you whole";
+earthquake[2] = "The earth roars like a wounded beast, shaking loose its fury";
+earthquake[3] = "Walking feels like balancing on a crumbling bridge, the ground shifting unpredictably";
+earthquake[4] = "Dust rises with each tremor, turning the air thick and suffocating";
+earthquake[5] = "The landscape heaves and buckles, reshaping itself with every passing second";
+earthquake[6] = "Each vibration feels alive, a heartbeat of a planet tearing itself apart";
+earthquake[7] = "The suit struggles to steady you, its sensors faltering under the relentless quakes";
+earthquake[8] = "Rocks tumble and the ground groans, a reminder of the fragility beneath your feet";
+earthquake[9] = "The world cracks open in defiance, each step a gamble on what might come next";
+earthquake[10] = "The shaking never stops, like an endless reminder that you're at the mercy of forces far greater";
+
+tornado[0] = "The storm's howl drowns out thought, each gust a fight for survival against a force that cares for nothing";
+tornado[1] = "The tornado looms, alive and ravenous, its winds clawing at every step you take";
+tornado[2] = "Walking feels impossible, as if the air itself rebels against your existence";
+tornado[3] = "The wind is a wall, slamming into you with relentless fury. Every breath feels stolen";
+tornado[4] = "Debris whirls past, fragments of destruction tearing through the darkened sky";
+tornado[5] = "The ground tilts with the storm's force, and each gust drags you closer to chaos";
+tornado[6] = "Every sound is drowned in the roar, a symphony of nature's raw, unstoppable power";
+tornado[7] = "The horizon fades into a swirling mass of debris, the tornado turning the world into a nightmare";
+tornado[8] = "The air feels alive, ripping, tearing, screaming-a force of nature unbound";
+tornado[9] = "Even the suit strains under the storm, groaning as it fights to keep you standing";
+tornado[10] = "Each step forward feels like defiance, as if challenging the storm to take you";
